@@ -41,7 +41,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(200);
-        $this->assertStringContainsStringIgnoringCase('true', $output);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
 
     }
 
@@ -72,7 +72,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(200);
-        $this->assertStringContainsStringIgnoringCase('true', $output);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
 
     }
 
@@ -98,7 +98,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(404);
-        $this->assertStringContainsStringIgnoringCase('false', $output);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }
 
@@ -132,7 +132,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(200);
-        $this->assertStringContainsStringIgnoringCase('true', $output);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
 
     }
 
@@ -166,7 +166,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(400);
-        $this->assertStringContainsStringIgnoringCase('false', $output);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }
 
@@ -198,7 +198,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(200);
-        $this->assertStringContainsStringIgnoringCase('true', $output);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
 
     }
 
@@ -230,7 +230,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(400);
-        $this->assertStringContainsStringIgnoringCase('false', $output);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }
 
@@ -262,7 +262,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(400);
-        $this->assertStringContainsStringIgnoringCase('false', $output);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }
 
@@ -288,7 +288,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(200);
-        $this->assertStringContainsStringIgnoringCase('true', $output);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
 
     }
 
@@ -314,7 +314,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(400);
-        $this->assertStringContainsStringIgnoringCase('false', $output);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }
 
@@ -340,7 +340,7 @@ class Order_test extends TestCase
 
         // assert response code and message
         $this->assertResponseCode(400);
-        $this->assertStringContainsStringIgnoringCase('false', $output);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }
 
