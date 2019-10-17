@@ -233,6 +233,9 @@ class Order_model_test extends TestCase
                 'price' => '3000'
             ];
 
+        // id to be sent
+        $id = '1';
+
        // verify function called at least once
 		$this->verifyInvokedOnce(
 			$db_result,
@@ -247,7 +250,7 @@ class Order_model_test extends TestCase
         $expected = 1;
 
         // run function to be tested
-        $list = $this->obj->updateOrder($data);
+        $list = $this->obj->updateOrder($data, $id);
         
         // assert if output matched expected
 		$this->assertEquals($expected, $return);
@@ -271,6 +274,9 @@ class Order_model_test extends TestCase
                 'quantity' => '3',
                 'price' => '3000'
             ];
+        
+            // id to be sent
+        $id = '1';
 
        // verify function called at least once
 		$this->verifyInvokedOnce(
@@ -286,7 +292,7 @@ class Order_model_test extends TestCase
         $expected = -1;
 
         // run function to be tested
-        $list = $this->obj->updateOrder($data);
+        $list = $this->obj->updateOrder($data, $id);
         
         // assert if output matched expected
 		$this->assertEquals($expected, $return);
@@ -304,8 +310,8 @@ class Order_model_test extends TestCase
 
         $db_result->method('affected_rows')->willReturn($return);
 
-        // data to be sent
-        $data = '1';
+        // id to be sent
+        $id = '1';
 
        // verify function called at least once
 		$this->verifyInvokedOnce(
@@ -321,7 +327,7 @@ class Order_model_test extends TestCase
         $expected = 1;
 
         // run function to be tested
-        $list = $this->obj->deleteOrder($data);
+        $list = $this->obj->deleteOrder($id);
         
         // assert if output matched expected
 		$this->assertEquals($expected, $return);
@@ -339,8 +345,8 @@ class Order_model_test extends TestCase
 
         $db_result->method('affected_rows')->willReturn($return);
 
-        // data to be sent
-        $data = '1';
+        // id to be sent
+        $id = '1';
 
        // verify function called at least once
 		$this->verifyInvokedOnce(
@@ -356,7 +362,7 @@ class Order_model_test extends TestCase
         $expected = -1;
 
         // run function to be tested
-        $list = $this->obj->deleteOrder($data);
+        $list = $this->obj->deleteOrder($id);
         
         // assert if output matched expected
 		$this->assertEquals($expected, $return);
