@@ -1,0 +1,151 @@
+version: "3.1"
+services:
+    rabbitmq:
+        image: rabbitmq:management
+        container_name: rabbitmq
+        ports:
+            - "15672:15672"
+            - "5672:5672"
+        networks:
+            - default
+    php_financial:
+        build: .
+        container_name: php_financial
+        ports:
+            - "8081:80"
+        depends_on:
+            - "rabbitmq"
+        volumes:
+            - ./financial:/var/www/html/tdd-microservice-poc
+            - ./sock_financial:/var/run/mysqld
+            - ./index.php:/var/www/html/index.php
+        links:
+            - my_financial
+        networks:
+            - default
+        working_dir: /var/www/html/tdd-microservice-poc
+    my_financial:
+        image: mysql:8.0
+        container_name: my_financial
+        ports:
+            - "3307:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test
+        volumes:
+            - ./dump_financial:/docker-entrypoint-initdb.d
+            - ./conf_financial:/etc/mysql/conf.d
+            - ./sock_financial:/var/run/mysqld
+            - mysql_financial:/var/lib/mysql
+        networks:
+            - default
+    phpmyadmin_financial:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin_financial
+        links:
+            - my_financial:my_financial
+        ports:
+            - 8084:80
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test
+            PMA_HOST: my_financial
+            PMA_PORT: 3306
+    php_order:
+        build: .
+        container_name: php_order
+        ports:
+            - "8082:80"
+        volumes:
+            - ./order:/var/www/html/tdd-microservice-poc
+            - ./sock_order:/var/run/mysqld
+            - ./index.php:/var/www/html/index.php
+        links:
+            - my_order
+        networks:
+            - default
+        working_dir: /var/www/html/tdd-microservice-poc
+    my_order:
+        image: mysql:8.0
+        container_name: my_order
+        ports:
+            - "3308:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test
+        volumes:
+            - ./dump_order:/docker-entrypoint-initdb.d
+            - ./conf_order:/etc/mysql/conf.d
+            - ./sock_order:/var/run/mysqld
+            - mysql_order:/var/lib/mysql
+        networks:
+            - default
+    phpmyadmin_order:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin_order
+        links:
+            - my_order:my_order
+        ports:
+            - 8085:80
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test
+            PMA_HOST: my_order
+            PMA_PORT: 3306
+    php_warehouse:
+        build: .
+        container_name: php_warehouse
+        ports:
+            - "8083:80"
+        depends_on:
+            - "rabbitmq"
+        volumes:
+            - ./warehouse:/var/www/html/tdd-microservice-poc
+            - ./sock_warehouse:/var/run/mysqld
+            - ./index.php:/var/www/html/index.php
+        links:
+            - my_warehouse
+        networks:
+            - default
+        working_dir: /var/www/html/tdd-microservice-poc
+    my_warehouse:
+        image: mysql:8.0
+        container_name: my_warehouse
+        ports:
+            - "3309:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test
+        volumes:
+            - ./dump_warehouse:/docker-entrypoint-initdb.d
+            - ./conf_warehouse:/etc/mysql/conf.d
+            - ./sock_warehouse:/var/run/mysqld
+            - mysql_warehouse:/var/lib/mysql
+        networks:
+            - default
+    phpmyadmin_warehouse:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin_warehouse
+        links:
+            - my_warehouse:my_warehouse
+        ports:
+            - 8086:80
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test
+            PMA_HOST: my_warehouse
+            PMA_PORT: 3306
+
+volumes:
+    mysql_financial:
+    mysql_order:
+    mysql_warehouse:
