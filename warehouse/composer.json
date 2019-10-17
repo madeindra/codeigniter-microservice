@@ -1,0 +1,21 @@
+{
+	"description": "Microservice with TDD",
+	"name": "telkom/tdd-microservice-poc",
+	"type": "project",
+	"license": "MIT",
+	"config": {
+	"vendor-dir": "application/vendor/"
+    },
+    "scripts": {
+		"test": "cd application/tests && ../vendor/bin/phpunit",
+		"lint": "./application/vendor/bin/phpcs -p --extensions=php --standard=PSR2 --error-severity=1 --warning-severity=0 ./application",
+        "security": "composer outdated"
+    },
+    "require": {
+        "php-amqplib/php-amqplib": "^2.10",
+        "kenjis/ci-phpunit-test": "^0.17.0",
+        "chriskacerguis/codeigniter-restserver": "^3.0",
+        "php": "^7.3",
+        "phpunit/phpunit": "^8.3"
+    }
+}
