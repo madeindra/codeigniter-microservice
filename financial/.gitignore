@@ -1,0 +1,15 @@
+*/config/development
+*/logs/log-*.php
+!*/logs/index.html
+*/cache/*
+!*/cache/index.html
+!*/cache/.htaccess
+
+#codeigniter 3
+application/vendor/*
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
+/vendor/
+application/tests/build/
+.scannerwork/
