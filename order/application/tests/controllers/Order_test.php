@@ -433,12 +433,7 @@ class Order_test extends TestCase
             function ($CI) {
                 $model = $this->getDouble(
                     'Order_model', [
-                        'getOrder' => [
-                            'id' => '1',
-                            'product_id' => '1',
-                            'quantity' => '5',
-                            'price' => '5000'
-                        ]
+                        'getOrder' => NULL
                     ]
                 );
                 // use mocked model to be loaded
