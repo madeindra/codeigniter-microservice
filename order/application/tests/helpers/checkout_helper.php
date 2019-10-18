@@ -32,7 +32,7 @@ function processCheckout($data){
     // send message to exchange
     $channel->basic_publish($msg, $exchange_name);
 
-    // prepare a function for
+    // prepare a function for callback on receiveing message 
     $onMessage = function($rep) use (&$corr_id, &$res){
         if ($rep->get('correlation_id') == $corr_id) {
             $res = $rep->body;
