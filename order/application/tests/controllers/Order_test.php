@@ -344,4 +344,48 @@ class Order_test extends TestCase
 
     }
 
+    public function test_order_accepted(){
+        // mock model and library on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Order_model', [
+                        'getOrder' => [
+                            'id' => '1',
+                            'product_id' => '1',
+                            'quantity' => '5',
+                            'price' => '5000'
+                        ]
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Order_model = $model;
+
+                $library = $this->getDouble(
+                    'Php_func', [
+                        'processCheckout' => json_encode([
+                            'productId' => '1',
+                            'quantity' => '10',
+                            'inStock' => TRUE,
+                            'invoiceId' => '1'
+                        ])
+                    ]
+                );
+                // use mocked library to be loaded
+                $CI->php_func = $library;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('POST', 'api/1.0.0/order/checkout/1');
+
+        // assert response code and message
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+
+    }
+
 }
