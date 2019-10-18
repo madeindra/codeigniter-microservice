@@ -204,7 +204,7 @@ class Order extends REST_Controller
         $order = $this->php_func->processCheckout($data);
         if (!empty($order)){
 
-            $result = json_decode($order);
+            $result = json_decode($order, true);
 
             return $this->response(
                 [
