@@ -54,4 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['api/1.0.0/invoice'] = 'invoice';
-$route['api/1.0.0/invoice/:any'] = 'invoice';
+$route['api/1.0.0/invoice/(:any)'] = 'invoice/$1';
