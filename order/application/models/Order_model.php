@@ -29,7 +29,7 @@ class Order_model extends CI_Model
     // delete an existing order
     public function deleteOrder($id)
     {
-        $this->db->delete('order', $id);
+        $this->db->delete('order', ['id' => $id]);
         return $this->db->affected_rows();
     }
 
