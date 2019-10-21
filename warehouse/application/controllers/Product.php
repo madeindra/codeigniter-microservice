@@ -162,4 +162,43 @@ class Product extends REST_Controller
         );
 
     }
+
+    // stock PUT method
+    public function stock_put(){
+        $id = $this->uri->segment(5);
+
+        if($id === NULL){
+            return $this->response(
+                [
+                    'success' => FALSE,
+                    'message' => 'provide an id'
+                ],
+                REST_Controller::HTTP_BAD_REQUEST,
+                TRUE
+            );
+        }
+
+        $quantity = $this->put('quantity') ?? NULL;
+
+        if ($this->Product_model->updateProductStock($quantity, $id) > 0) {
+            return $this->response(
+                [
+                    'success' => TRUE,
+                    'message' => 'product stock has been updated'
+                ],
+                REST_Controller::HTTP_OK,
+                TRUE
+            );
+        }
+
+        return $this->response(
+            [
+                'success' => FALSE,
+                'message' => 'failed to update product stock'
+            ],
+            REST_Controller::HTTP_BAD_REQUEST,
+            TRUE
+        );
+
+    }
 }
