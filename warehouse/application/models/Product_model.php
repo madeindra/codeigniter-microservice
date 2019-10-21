@@ -29,7 +29,7 @@ class Product_model extends CI_Model
     // delete an existing product
     public function deleteProduct($id)
     {
-        $this->db->delete('product', $id);
+        $this->db->delete('product', ['id' => $id]);
         return $this->db->affected_rows();
     }
 
