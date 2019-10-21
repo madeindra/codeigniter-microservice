@@ -179,40 +179,31 @@ class Invoice extends REST_Controller
             return $this->response(
                 [
                     'success' => FALSE,
-                    'message' => 'provide an id'
+                    'message' => 'provide an order id'
                 ],
                 REST_Controller::HTTP_BAD_REQUEST,
                 TRUE
             );
         }
 
-        $order_id = $this->put('order_id') ?? NULL;
         $total = $this->put('total') ?? NULL;
         $status = $this->put('status') ?? 'incomplete';
         
         $data =
         [
-            'id' => $id,
             'status' => $status
         ];
-        
-
-        if ($order_id !== NULL) {
-            $data += ['order_id' => $order_id];
-        
-        }
+    
 
         if ($total !== NULL) {
             $data += ['total' => $total];
-        
         }
 
         if ($this->Invoice_model->updateInvoiceByOrderId($data, $id) > 0) {
             return $this->response(
                 [
                     'success' => TRUE,
-                    'message' => 'invoice has been updated',
-                    'data' => $data
+                    'message' => 'invoice has been updated'
                 ],
                 REST_Controller::HTTP_OK,
                 TRUE
