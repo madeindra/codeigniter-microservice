@@ -367,4 +367,156 @@ class Invoice_model_test extends TestCase
 
     }
 
+    public function test_update_order_invoice_success(){
+        // mock result
+        $return = 1;
+
+        // mock affected rows
+        $db_result = $this->getMockBuilder('CI_DB_sqlite3_driver')
+			              ->disableOriginalConstructor()
+                          ->getMock();
+
+        $db_result->method('affected_rows')->willReturn($return);
+
+        // data to be sent
+        $data =
+            [
+                'status' => 'waiting'
+            ];
+
+        // id to be sent
+        $id = '1';
+
+       // verify function called at least once
+		$this->verifyInvokedOnce(
+			$db_result,
+			'affected_rows',
+			[]
+        );
+
+        // set mocked db
+        $this->obj->db = $db_result;
+
+        // set expected result
+        $expected = 1;
+
+        // run function to be tested
+        $list = $this->obj->updateInvoiceByOrderId($data, $id);
+        
+        // assert if output matched expected
+		$this->assertEquals($expected, $return);
+
+    }
+
+    public function test_update_order_invoice_failed(){
+        // mock result
+        $return = -1;
+
+        // mock affected rows
+        $db_result = $this->getMockBuilder('CI_DB_sqlite3_driver')
+			              ->disableOriginalConstructor()
+                          ->getMock();
+
+        $db_result->method('affected_rows')->willReturn($return);
+
+        // data to be sent
+        $data =
+            [
+                'status' => 'waiting'
+            ];
+        
+            // id to be sent
+        $id = '1';
+
+       // verify function called at least once
+		$this->verifyInvokedOnce(
+			$db_result,
+			'affected_rows',
+			[]
+        );
+
+        // set mocked db
+        $this->obj->db = $db_result;
+
+        // set expected result
+        $expected = -1;
+
+        // run function to be tested
+        $list = $this->obj->updateInvoiceByOrderId($data, $id);
+        
+        // assert if output matched expected
+		$this->assertEquals($expected, $return);
+
+    }
+
+    public function test_delete_order_invoice_success(){
+        // mock result
+        $return = 1;
+
+        // mock affected rows
+        $db_result = $this->getMockBuilder('CI_DB_sqlite3_driver')
+			              ->disableOriginalConstructor()
+                          ->getMock();
+
+        $db_result->method('affected_rows')->willReturn($return);
+
+        // id to be sent
+        $id = '1';
+
+       // verify function called at least once
+		$this->verifyInvokedOnce(
+			$db_result,
+			'affected_rows',
+			[]
+        );
+
+        // set mocked db
+        $this->obj->db = $db_result;
+
+        // set expected result
+        $expected = 1;
+
+        // run function to be tested
+        $list = $this->obj->deleteInvoiceByOrderId($id);
+        
+        // assert if output matched expected
+		$this->assertEquals($expected, $return);
+
+    }
+
+    public function test_delete_order_invoice_failed(){
+        // mock result
+        $return = -1;
+
+        // mock affected rows
+        $db_result = $this->getMockBuilder('CI_DB_sqlite3_driver')
+			              ->disableOriginalConstructor()
+                          ->getMock();
+
+        $db_result->method('affected_rows')->willReturn($return);
+
+        // id to be sent
+        $id = '1';
+
+       // verify function called at least once
+		$this->verifyInvokedOnce(
+			$db_result,
+			'affected_rows',
+			[]
+        );
+
+        // set mocked db
+        $this->obj->db = $db_result;
+
+        // set expected result
+        $expected = -1;
+
+        // run function to be tested
+        $list = $this->obj->deleteInvoiceByOrderId($id);
+        
+        // assert if output matched expected
+		$this->assertEquals($expected, $return);
+
+    }
+
 }
