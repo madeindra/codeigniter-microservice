@@ -339,4 +339,96 @@ class Product_test extends TestCase
 
     }
 
+    public function test_put_stock_success(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Product_model', [
+                        'updateProductStock' => 1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Product_model = $model;
+            }
+        );
+
+        // set data to be sent
+        $data = json_encode([
+            'quantity' => '-10'
+        ]);
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('PUT', 'api/1.0.0/product/stock/1', $data);
+
+        // assert response code and message
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+
+    }
+
+    public function test_put_stock_failed(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Product_model', [
+                        'updateProductStock' => -1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Product_model = $model;
+            }
+        );
+
+        // set data to be sent
+        $data = json_encode([
+            'quantity' => '-10'
+        ]);
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('PUT', 'api/1.0.0/product/stock/1', $data);
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
+
+    public function test_put_stock_null_id(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Product_model', [
+                        'updateProductStock' => -1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Product_model = $model;
+            }
+        );
+
+        // set data to be sent
+        $data = json_encode([
+            'quantity' => '-10'
+        ]);
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('PUT', 'api/1.0.0/product/stock/', $data);
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
 }
