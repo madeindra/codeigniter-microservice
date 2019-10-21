@@ -1,6 +1,6 @@
 <?php
 // call autoload manually, because this script run on CLI
-require_once  '/var/www/html/tdd-microservice/application/vendor/autoload.php';
+require_once  '/var/www/html/tdd-microservice-poc/application/vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -29,15 +29,23 @@ function processInvoice(){
     echo " [x] Awaiting message\n";
 
     // prepare a function for callback on receiveing message 
-    $onMessage = function($rep) use (&$channel){
+    $onMessage = function($rep) use (&$exchange_reply, &$channel){
         $message_body = json_decode($rep->body, TRUE);
         // data received is ['order_id' => 1, 'product_id' => 1, 'quantity' => 10, 'data_type' => 'processCheckout']
         if ($message_body['data_type'] === 'processCheckout'){
             echo " [.] Requesting checkout invoice \n";
-            $invoice = createInvoice($message_body);
+
+            $data = [
+                'order_id' => $message_body['id'],
+                'total' => $message_body['price']
+            ];
+
+            $invoice = createInvoice($data);
+
             if(empty($invoice)){
                 return NULL;
             }
+            echo " [.] Successfuly created invoice \n";
         }
         
         if ($message_body['data_type'] === 'confirmStock'){
@@ -45,16 +53,22 @@ function processInvoice(){
             $message_body['invoice'] = FALSE;
             $message_body['data_type'] = 'confirmInvoice';
 
-            if ($message_body['inStock']){
+            if ($message_body['in_stock']){
+                echo " [.] Stock confirmed updating invoice \n";
+
                 $data = [
                     'status' => 'waiting'
                 ];
-
-                if(updateInvoice($message_body['order_id'], $data)){
+                
+                if(updateInvoice($message_body['id'], $data)){
                     $message_body['invoice'] = TRUE;
                 }
-            } else {
-                deleteInvoice($message_body['order_id']);
+            } 
+            
+            if(!$message_body['invoice']){
+                echo " [.] Stock nonexist deleting invoice \n";
+
+                deleteInvoice($message_body['id']);
             }
             // TODO: Send message to exchange
             // prepare message
@@ -64,6 +78,7 @@ function processInvoice(){
 
             // send message to exchange
             $channel->basic_publish($msg, $exchange_reply);
+            echo " [.] Message sent to $exchange_reply \n";
         }
     };
 
@@ -73,7 +88,7 @@ function processInvoice(){
     // wait for consume complete with timeout of 30 seconds
     while($channel->is_consuming()) {
         try{
-            $channel->wait(NULL, FALSE, 30);
+            $channel->wait();
         }
         catch (Exception $e){
             return;
@@ -89,21 +104,31 @@ function processInvoice(){
 }
 
 function createInvoice($data){
-    $curl = new Curl\Curl();
-    $curl->setHeader('Content-type', 'application/json');
-    
+    $client = new \GuzzleHttp\Client();
     try{
-        $response = $curl->post('localhost/tdd-microservice/api/1.0.0/invoice/', $data)->response;
-        return json_decode($response, TRUE);
+        $response = $client->post('localhost/tdd-microservice-poc/index.php/api/1.0.0/invoice/', ['json' => $data]);
+        return json_decode($response->getBody(), TRUE);
     } catch (Exception $e){
          return;
     }
 }
 
 function updateInvoice($id, $data){
-
+    $client = new \GuzzleHttp\Client();
+    try{
+        $response = $client->put('localhost/tdd-microservice-poc/index.php/api/1.0.0/invoice/order/'.$id.'/', ['json' => $data]);
+        return json_decode($response->getBody(), TRUE);
+    } catch (Exception $e){
+         return;
+    }
 }
 
 function deleteInvoice($id){
-
+    $client = new \GuzzleHttp\Client();
+    try{
+        $response =  $client->delete('localhost/tdd-microservice-poc/index.php/api/1.0.0/invoice/order/'.$id.'/');
+        return json_decode($response->getBody(), TRUE);
+    } catch (Exception $e){
+         return;
+    }
 }
