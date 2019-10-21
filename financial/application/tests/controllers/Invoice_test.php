@@ -342,4 +342,174 @@ class Invoice_test extends TestCase
 
     }
 
+    public function test_put_order_success(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'updateInvoice' => 1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        // set data to be sent
+        $data = json_encode([
+            'status' => 'pending'
+        ]);
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('PUT', 'api/1.0.0/invoice/order/1', $data);
+
+        // assert response code and message
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+
+    }
+
+    public function test_put_order_failed(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'updateInvoice' => -1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        // set data to be sent
+        $data = json_encode([
+            'status' => 'pending'
+        ]);
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('PUT', 'api/1.0.0/invoice/order/1', $data);
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
+
+    public function test_put_order_null_id(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'updateInvoice' => -1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        // set data to be sent
+        $data = json_encode([
+            'status' => 'pending'
+        ]);
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('PUT', 'api/1.0.0/invoice/order/', $data);
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
+
+    public function test_delete_order_success(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'deleteInvoice' => 1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('DELETE', 'api/1.0.0/invoice/order/1');
+
+        // assert response code and message
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+
+    }
+
+    public function test_delete_failed(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'deleteInvoice' => -1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('DELETE', 'api/1.0.0/invoice/order/1');
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
+
+    public function test_delete_order_null_id(){
+        // mock model on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Invoice_model', [
+                        'deleteInvoice' => -1
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Invoice_model = $model;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('DELETE', 'api/1.0.0/invoice/order/');
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
 }
