@@ -55,3 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['api/1.0.0/invoice'] = 'invoice';
 $route['api/1.0.0/invoice/(:any)'] = 'invoice/$1';
+
+$route['api/1.0.0/invoice/order/(:any)'] = 'invoice/order/$1';
