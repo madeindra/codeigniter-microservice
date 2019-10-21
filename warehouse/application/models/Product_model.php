@@ -33,4 +33,13 @@ class Product_model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    // update an stock product
+    public function updateProductStock($amount, $id)
+    {
+        $this->db->set('stock', 'stock'. $amount . '', FALSE);
+        $this->db->where('id', $id);
+        $this->db->update('product');
+        return $this->db->affected_rows();
+    }
+
 }
