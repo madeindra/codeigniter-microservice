@@ -348,7 +348,7 @@ class Invoice_test extends TestCase
             function ($CI) {
                 $model = $this->getDouble(
                     'Invoice_model', [
-                        'updateInvoice' => 1
+                        'updateInvoiceByOrderId' => 1
                     ]
                 );
                 // use mocked model to be loaded
@@ -379,7 +379,7 @@ class Invoice_test extends TestCase
             function ($CI) {
                 $model = $this->getDouble(
                     'Invoice_model', [
-                        'updateInvoice' => -1
+                        'updateInvoiceByOrderId' => -1
                     ]
                 );
                 // use mocked model to be loaded
@@ -410,7 +410,7 @@ class Invoice_test extends TestCase
             function ($CI) {
                 $model = $this->getDouble(
                     'Invoice_model', [
-                        'updateInvoice' => -1
+                        'updateInvoiceByOrderId' => -1
                     ]
                 );
                 // use mocked model to be loaded
@@ -441,7 +441,7 @@ class Invoice_test extends TestCase
             function ($CI) {
                 $model = $this->getDouble(
                     'Invoice_model', [
-                        'deleteInvoice' => 1
+                        'deleteInvoiceByOrderId' => 1
                     ]
                 );
                 // use mocked model to be loaded
@@ -467,7 +467,7 @@ class Invoice_test extends TestCase
             function ($CI) {
                 $model = $this->getDouble(
                     'Invoice_model', [
-                        'deleteInvoice' => -1
+                        'deleteInvoiceByOrderId' => -1
                     ]
                 );
                 // use mocked model to be loaded
@@ -493,7 +493,7 @@ class Invoice_test extends TestCase
             function ($CI) {
                 $model = $this->getDouble(
                     'Invoice_model', [
-                        'deleteInvoice' => -1
+                        'deleteInvoiceByOrderId' => -1
                     ]
                 );
                 // use mocked model to be loaded
