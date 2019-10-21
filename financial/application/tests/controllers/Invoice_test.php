@@ -461,7 +461,7 @@ class Invoice_test extends TestCase
 
     }
 
-    public function test_delete_failed(){
+    public function test_delete_order_failed(){
         // mock model on tested class' constructor and mock model's function
         $this->request->setCallable(
             function ($CI) {
