@@ -29,8 +29,10 @@ class Invoice_model extends CI_Model
     // delete an existing invoice
     public function deleteInvoice($id)
     {
-        $this->db->delete('invoice', $id);
+        $this->db->delete('invoice', ['id' => $id]);
         return $this->db->affected_rows();
     }
+
+
 
 }
