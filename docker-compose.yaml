@@ -8,11 +8,17 @@ services:
             - "5672:5672"
         networks:
             - default
+        healthcheck:
+            test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+            interval: 5s
+            timeout: 15s
+            retries: 1
     php_financial:
         build: .
         container_name: php_financial
         ports:
             - "8081:80"
+        restart: on-failure
         depends_on:
             - "rabbitmq"
         volumes:
@@ -24,6 +30,7 @@ services:
         networks:
             - default
         working_dir: /var/www/html/tdd-microservice-poc
+        command: bash -c "chmod +x start_worker.sh && ./start_worker.sh"
     my_financial:
         image: mysql:8.0
         container_name: my_financial
@@ -31,14 +38,11 @@ services:
             - "3307:3306"
         command: --default-authentication-plugin=mysql_native_password
         environment:
+            MYSQL_ROOT_PASSWORD: test
+            MYSQL_DATABASE: microservice
             MYSQL_USER: user
             MYSQL_PASSWORD: test
-            MYSQL_ROOT_PASSWORD: test
-        volumes:
-            - ./dump_financial:/docker-entrypoint-initdb.d
-            - ./conf_financial:/etc/mysql/conf.d
-            - ./sock_financial:/var/run/mysqld
-            - mysql_financial:/var/lib/mysql
+        
         networks:
             - default
     phpmyadmin_financial:
@@ -75,14 +79,11 @@ services:
             - "3308:3306"
         command: --default-authentication-plugin=mysql_native_password
         environment:
+            MYSQL_ROOT_PASSWORD: test
+            MYSQL_DATABASE: microservice
             MYSQL_USER: user
             MYSQL_PASSWORD: test
-            MYSQL_ROOT_PASSWORD: test
-        volumes:
-            - ./dump_order:/docker-entrypoint-initdb.d
-            - ./conf_order:/etc/mysql/conf.d
-            - ./sock_order:/var/run/mysqld
-            - mysql_order:/var/lib/mysql
+        
         networks:
             - default
     phpmyadmin_order:
@@ -103,6 +104,7 @@ services:
         container_name: php_warehouse
         ports:
             - "8083:80"
+        restart: on-failure
         depends_on:
             - "rabbitmq"
         volumes:
@@ -114,6 +116,7 @@ services:
         networks:
             - default
         working_dir: /var/www/html/tdd-microservice-poc
+        command: bash -c "chmod +x start_worker.sh && ./start_worker.sh"
     my_warehouse:
         image: mysql:8.0
         container_name: my_warehouse
@@ -121,14 +124,11 @@ services:
             - "3309:3306"
         command: --default-authentication-plugin=mysql_native_password
         environment:
+            MYSQL_ROOT_PASSWORD: test
+            MYSQL_DATABASE: microservice
             MYSQL_USER: user
             MYSQL_PASSWORD: test
-            MYSQL_ROOT_PASSWORD: test
-        volumes:
-            - ./dump_warehouse:/docker-entrypoint-initdb.d
-            - ./conf_warehouse:/etc/mysql/conf.d
-            - ./sock_warehouse:/var/run/mysqld
-            - mysql_warehouse:/var/lib/mysql
+        
         networks:
             - default
     phpmyadmin_warehouse:

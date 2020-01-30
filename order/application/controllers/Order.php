@@ -6,6 +6,7 @@ class Order extends REST_Controller
     public function __construct(){
         parent::__construct();
         $this->load->model('Order_model');
+        $this->load->library('Php_func');
     }
 
     // default GET method
@@ -169,5 +170,60 @@ class Order extends REST_Controller
             TRUE
         );
 
+    }
+
+    // Checkout POST method
+    public function checkout_post(){
+        $id = $this->uri->segment(5);
+
+        if ($id === NULL) {
+            return $this->response(
+                [
+                    'success' => FALSE,
+                    'message' => 'provide an id'
+                ],
+                REST_Controller::HTTP_BAD_REQUEST,
+                TRUE
+            );
+        }
+
+        $data = $this->Order_model->getOrder($id);
+
+        if (empty($data)){
+            return $this->response(
+                [
+                    'success' => FALSE,
+                    'message' => 'order not found'
+                ],
+                REST_Controller::HTTP_NOT_FOUND,
+                TRUE
+            );
+        }
+
+        $data = json_encode($data);
+        $order = $this->php_func->processCheckout($data);
+        if (!empty($order)){
+
+            $result = json_decode($order, true);
+
+            return $this->response(
+                [
+                    'success' => TRUE,
+                    'message' => 'order has been checkout successfully',
+                    'data' => $result
+                ],
+                REST_Controller::HTTP_OK,
+                TRUE
+            );
+        }
+
+        return $this->response(
+            [
+                'success' => FALSE,
+                'message' => 'cannot process checkout'
+            ],
+            REST_Controller::HTTP_BAD_REQUEST,
+            TRUE
+        );
     }
 }

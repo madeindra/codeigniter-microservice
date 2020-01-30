@@ -53,5 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['api/1.0.0/invoice'] = 'invoice';
-$route['api/1.0.0/invoice/:any'] = 'invoice';
+$route['api/v1/invoices'] = 'invoice';
+$route['api/v1/invoices/(:any)'] = 'invoice/$1';
+
+$route['api/v1/invoices/orders/(:any)'] = 'invoice/order/$1';

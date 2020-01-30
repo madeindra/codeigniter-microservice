@@ -37,7 +37,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/1.0.0/order/');
+        $output = $this->request('GET', 'api/v1/orders/');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -68,7 +68,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/1.0.0/order/1');
+        $output = $this->request('GET', 'api/v1/orders/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -94,7 +94,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/1.0.0/order/1');
+        $output = $this->request('GET', 'api/v1/orders/1');
 
         // assert response code and message
         $this->assertResponseCode(404);
@@ -128,7 +128,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/', $data);
+        $output = $this->request('POST', 'api/v1/orders/', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -162,7 +162,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/', $data);
+        $output = $this->request('POST', 'api/v1/orders/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -194,7 +194,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/1.0.0/order/1', $data);
+        $output = $this->request('PUT', 'api/v1/orders/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -226,7 +226,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/1.0.0/order/1', $data);
+        $output = $this->request('PUT', 'api/v1/orders/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -258,7 +258,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/1.0.0/order/', $data);
+        $output = $this->request('PUT', 'api/v1/orders/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -284,7 +284,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/1.0.0/order/1');
+        $output = $this->request('DELETE', 'api/v1/orders/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -310,7 +310,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/1.0.0/order/1');
+        $output = $this->request('DELETE', 'api/v1/orders/1');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -336,10 +336,161 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/1.0.0/order/');
+        $output = $this->request('DELETE', 'api/v1/orders/');
 
         // assert response code and message
         $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
+
+    public function test_order_accepted(){
+        // mock model and library on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Order_model', [
+                        'getOrder' => [
+                            'id' => '1',
+                            'product_id' => '1',
+                            'quantity' => '5',
+                            'price' => '5000'
+                        ]
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Order_model = $model;
+
+                $library = $this->getDouble(
+                    'Php_func', [
+                        'processCheckout' => json_encode([
+                            'productId' => '1',
+                            'quantity' => '10',
+                            'inStock' => TRUE,
+                            'invoiceId' => '1'
+                        ])
+                    ]
+                );
+                // use mocked library to be loaded
+                $CI->php_func = $library;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('POST', 'api/v1/orders/checkout/1');
+
+        // assert response code and message
+        $this->assertResponseCode(200);
+        $this->assertStringContainsStringIgnoringCase('TRUE', $output);
+
+    }
+
+    public function test_order_rejected(){
+        // mock model and library on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Order_model', [
+                        'getOrder' => [
+                            'id' => '1',
+                            'product_id' => '1',
+                            'quantity' => '5',
+                            'price' => '5000'
+                        ]
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Order_model = $model;
+
+                $library = $this->getDouble(
+                    'Php_func', [
+                        'processCheckout' => NULL
+                    ]
+                );
+                // use mocked library to be loaded
+                $CI->php_func = $library;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('POST', 'api/v1/orders/checkout/1');
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
+
+    public function test_order_null_id(){
+        // mock model and library on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Order_model', [
+                        'getOrder' => NULL
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Order_model = $model;
+
+                $library = $this->getDouble(
+                    'Php_func', [
+                        'processCheckout' => NULL
+                    ]
+                );
+                // use mocked library to be loaded
+                $CI->php_func = $library;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('POST', 'api/v1/orders/checkout/');
+
+        // assert response code and message
+        $this->assertResponseCode(400);
+        $this->assertStringContainsStringIgnoringCase('FALSE', $output);
+
+    }
+
+    public function test_order_not_found(){
+        // mock model and library on tested class' constructor and mock model's function
+        $this->request->setCallable(
+            function ($CI) {
+                $model = $this->getDouble(
+                    'Order_model', [
+                        'getOrder' => NULL
+                    ]
+                );
+                // use mocked model to be loaded
+                $CI->Order_model = $model;
+
+                $library = $this->getDouble(
+                    'Php_func', [
+                        'processCheckout' => NULL
+                    ]
+                );
+                // use mocked library to be loaded
+                $CI->php_func = $library;
+            }
+        );
+
+        // set request as JSON
+        $this->request->setHeader('Content-type', 'application/json');
+
+        // send request
+        $output = $this->request('POST', 'api/v1/orders/checkout/1');
+
+        // assert response code and message
+        $this->assertResponseCode(404);
         $this->assertStringContainsStringIgnoringCase('FALSE', $output);
 
     }

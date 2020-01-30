@@ -4,6 +4,6 @@ sock_financial
 dump_order
 conf_order
 sock_order
-dump_warehous
-conf_warehous
-sock_warehous
+dump_warehouse
+conf_warehouse
+sock_warehouse
