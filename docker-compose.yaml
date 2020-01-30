@@ -23,7 +23,6 @@ services:
             - "rabbitmq"
         volumes:
             - ./financial:/var/www/html/tdd-microservice-poc
-            - ./sock_financial:/var/run/mysqld
             - ./index.php:/var/www/html/index.php
         links:
             - my_financial
@@ -65,7 +64,6 @@ services:
             - "8082:80"
         volumes:
             - ./order:/var/www/html/tdd-microservice-poc
-            - ./sock_order:/var/run/mysqld
             - ./index.php:/var/www/html/index.php
         links:
             - my_order
@@ -109,7 +107,6 @@ services:
             - "rabbitmq"
         volumes:
             - ./warehouse:/var/www/html/tdd-microservice-poc
-            - ./sock_warehouse:/var/run/mysqld
             - ./index.php:/var/www/html/index.php
         links:
             - my_warehouse
