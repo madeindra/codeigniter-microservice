@@ -8,11 +8,17 @@ services:
             - "5672:5672"
         networks:
             - default
+        healthcheck:
+            test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+            interval: 5s
+            timeout: 15s
+            retries: 1
     php_financial:
         build: .
         container_name: php_financial
         ports:
             - "8081:80"
+        restart: on-failure
         depends_on:
             - "rabbitmq"
         volumes:
@@ -24,6 +30,7 @@ services:
         networks:
             - default
         working_dir: /var/www/html/tdd-microservice-poc
+        command: bash -c "chmod +x start_worker.sh && ./start_worker.sh"
     my_financial:
         image: mysql:8.0
         container_name: my_financial
@@ -103,6 +110,7 @@ services:
         container_name: php_warehouse
         ports:
             - "8083:80"
+        restart: on-failure
         depends_on:
             - "rabbitmq"
         volumes:
@@ -114,6 +122,7 @@ services:
         networks:
             - default
         working_dir: /var/www/html/tdd-microservice-poc
+        command: bash -c "chmod +x start_worker.sh && ./start_worker.sh"
     my_warehouse:
         image: mysql:8.0
         container_name: my_warehouse
