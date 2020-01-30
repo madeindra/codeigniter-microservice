@@ -53,7 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['api/1.0.0/product'] = 'product';
-$route['api/1.0.0/product/(:any)'] = 'product/$1';
+$route['api/v1/product'] = 'product';
+$route['api/v1/product/(:any)'] = 'product/$1';
 
-$route['api/1.0.0/product/stock/(:any)'] = 'product/stock/$1';
+$route['api/v1/product/stock/(:any)'] = 'product/stock/$1';

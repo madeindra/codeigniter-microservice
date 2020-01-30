@@ -37,7 +37,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/1.0.0/order/');
+        $output = $this->request('GET', 'api/v1/order/');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -68,7 +68,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/1.0.0/order/1');
+        $output = $this->request('GET', 'api/v1/order/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -94,7 +94,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/1.0.0/order/1');
+        $output = $this->request('GET', 'api/v1/order/1');
 
         // assert response code and message
         $this->assertResponseCode(404);
@@ -128,7 +128,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/', $data);
+        $output = $this->request('POST', 'api/v1/order/', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -162,7 +162,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/', $data);
+        $output = $this->request('POST', 'api/v1/order/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -194,7 +194,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/1.0.0/order/1', $data);
+        $output = $this->request('PUT', 'api/v1/order/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -226,7 +226,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/1.0.0/order/1', $data);
+        $output = $this->request('PUT', 'api/v1/order/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -258,7 +258,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/1.0.0/order/', $data);
+        $output = $this->request('PUT', 'api/v1/order/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -284,7 +284,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/1.0.0/order/1');
+        $output = $this->request('DELETE', 'api/v1/order/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -310,7 +310,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/1.0.0/order/1');
+        $output = $this->request('DELETE', 'api/v1/order/1');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -336,7 +336,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/1.0.0/order/');
+        $output = $this->request('DELETE', 'api/v1/order/');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -380,7 +380,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/checkout/1');
+        $output = $this->request('POST', 'api/v1/order/checkout/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -419,7 +419,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/checkout/1');
+        $output = $this->request('POST', 'api/v1/order/checkout/1');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -453,7 +453,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/checkout/');
+        $output = $this->request('POST', 'api/v1/order/checkout/');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -487,7 +487,7 @@ class Order_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/1.0.0/order/checkout/1');
+        $output = $this->request('POST', 'api/v1/order/checkout/1');
 
         // assert response code and message
         $this->assertResponseCode(404);

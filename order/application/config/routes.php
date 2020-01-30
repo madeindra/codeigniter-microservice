@@ -53,7 +53,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['api/1.0.0/order'] = 'order';
-$route['api/1.0.0/order/(:any)'] = 'order/$1';
+$route['api/v1/order'] = 'order';
+$route['api/v1/order/(:any)'] = 'order/$1';
 
-$route['api/1.0.0/order/checkout/(:any)'] = 'order/checkout/$1';
+$route['api/v1/order/checkout/(:any)'] = 'order/checkout/$1';
