@@ -362,7 +362,7 @@ class Product_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/products/stock/1', $data);
+        $output = $this->request('PUT', 'api/v1/products/stocks/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -393,7 +393,7 @@ class Product_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/products/stock/1', $data);
+        $output = $this->request('PUT', 'api/v1/products/stocks/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -424,7 +424,7 @@ class Product_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/products/stock/', $data);
+        $output = $this->request('PUT', 'api/v1/products/stocks/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);

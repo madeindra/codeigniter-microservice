@@ -56,4 +56,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['api/v1/products'] = 'product';
 $route['api/v1/products/(:any)'] = 'product/$1';
 
-$route['api/v1/products/stock/(:any)'] = 'product/stock/$1';
+$route['api/v1/products/stocks/(:any)'] = 'product/stock/$1';

@@ -118,7 +118,7 @@ function updateStock($amount, $id){
     $data = ['quantity' => '-'.$amount];
 
     try{
-        $response = $client->put('localhost/tdd-microservice-poc/index.php/api/v1/products/stock/'.$id, ['json' => $data]);
+        $response = $client->put('localhost/tdd-microservice-poc/index.php/api/v1/products/stocks/'.$id, ['json' => $data]);
         return json_decode($response->getBody(), TRUE);
     } catch (Exception $e){
          return;

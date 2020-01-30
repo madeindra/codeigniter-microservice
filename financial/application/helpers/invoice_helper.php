@@ -116,7 +116,7 @@ function createInvoice($data){
 function updateInvoice($id, $data){
     $client = new \GuzzleHttp\Client();
     try{
-        $response = $client->put('localhost/tdd-microservice-poc/index.php/api/v1/invoices/order/'.$id.'/', ['json' => $data]);
+        $response = $client->put('localhost/tdd-microservice-poc/index.php/api/v1/invoices/orders/'.$id.'/', ['json' => $data]);
         return json_decode($response->getBody(), TRUE);
     } catch (Exception $e){
          return;
@@ -126,7 +126,7 @@ function updateInvoice($id, $data){
 function deleteInvoice($id){
     $client = new \GuzzleHttp\Client();
     try{
-        $response =  $client->delete('localhost/tdd-microservice-poc/index.php/api/v1/invoices/order/'.$id.'/');
+        $response =  $client->delete('localhost/tdd-microservice-poc/index.php/api/v1/invoices/orders/'.$id.'/');
         return json_decode($response->getBody(), TRUE);
     } catch (Exception $e){
          return;
