@@ -100,7 +100,7 @@ function checkProduct($data){
     $client = new \GuzzleHttp\Client();
     $id = $data['product_id'];
     try{
-        $response = $client->get('localhost/tdd-microservice-poc/index.php/api/v1/product/'.$id);
+        $response = $client->get('localhost/tdd-microservice-poc/index.php/api/v1/products/'.$id);
         $response = json_decode($response->getBody(),TRUE);
         $response = $response['data'];
         
@@ -118,7 +118,7 @@ function updateStock($amount, $id){
     $data = ['quantity' => '-'.$amount];
 
     try{
-        $response = $client->put('localhost/tdd-microservice-poc/index.php/api/v1/product/stock/'.$id, ['json' => $data]);
+        $response = $client->put('localhost/tdd-microservice-poc/index.php/api/v1/products/stock/'.$id, ['json' => $data]);
         return json_decode($response->getBody(), TRUE);
     } catch (Exception $e){
          return;

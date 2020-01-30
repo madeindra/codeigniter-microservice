@@ -37,7 +37,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/v1/invoice/');
+        $output = $this->request('GET', 'api/v1/invoices/');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -69,7 +69,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/v1/invoice/1');
+        $output = $this->request('GET', 'api/v1/invoices/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -95,7 +95,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('GET', 'api/v1/invoice/1');
+        $output = $this->request('GET', 'api/v1/invoices/1');
 
         // assert response code and message
         $this->assertResponseCode(404);
@@ -129,7 +129,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/v1/invoice/', $data);
+        $output = $this->request('POST', 'api/v1/invoices/', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -163,7 +163,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('POST', 'api/v1/invoice/', $data);
+        $output = $this->request('POST', 'api/v1/invoices/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -194,7 +194,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/invoice/1', $data);
+        $output = $this->request('PUT', 'api/v1/invoices/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -225,7 +225,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/invoice/1', $data);
+        $output = $this->request('PUT', 'api/v1/invoices/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -256,7 +256,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/invoice/', $data);
+        $output = $this->request('PUT', 'api/v1/invoices/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -282,7 +282,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/v1/invoice/1');
+        $output = $this->request('DELETE', 'api/v1/invoices/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -308,7 +308,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/v1/invoice/1');
+        $output = $this->request('DELETE', 'api/v1/invoices/1');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -334,7 +334,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/v1/invoice/');
+        $output = $this->request('DELETE', 'api/v1/invoices/');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -365,7 +365,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/invoice/order/1', $data);
+        $output = $this->request('PUT', 'api/v1/invoices/order/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -396,7 +396,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/invoice/order/1', $data);
+        $output = $this->request('PUT', 'api/v1/invoices/order/1', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -427,7 +427,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('PUT', 'api/v1/invoice/order/', $data);
+        $output = $this->request('PUT', 'api/v1/invoices/order/', $data);
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -453,7 +453,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/v1/invoice/order/1');
+        $output = $this->request('DELETE', 'api/v1/invoices/order/1');
 
         // assert response code and message
         $this->assertResponseCode(200);
@@ -479,7 +479,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/v1/invoice/order/1');
+        $output = $this->request('DELETE', 'api/v1/invoices/order/1');
 
         // assert response code and message
         $this->assertResponseCode(400);
@@ -505,7 +505,7 @@ class Invoice_test extends TestCase
         $this->request->setHeader('Content-type', 'application/json');
 
         // send request
-        $output = $this->request('DELETE', 'api/v1/invoice/order/');
+        $output = $this->request('DELETE', 'api/v1/invoices/order/');
 
         // assert response code and message
         $this->assertResponseCode(400);
