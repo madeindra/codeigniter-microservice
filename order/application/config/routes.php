@@ -53,7 +53,9 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+// Longer route should be first so it won't interfere with (:any) rules of the main route
+$route['api/v1/orders/checkout'] = 'order/checkout';
+$route['api/v1/orders/checkout/(:any)'] = 'order/checkout/$1';
+
 $route['api/v1/orders'] = 'order';
 $route['api/v1/orders/(:any)'] = 'order/$1';
-
-$route['api/v1/orders/checkout/(:any)'] = 'order/checkout/$1';
