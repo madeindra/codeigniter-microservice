@@ -37,12 +37,13 @@ localhost:8083/tdd-microservice-poc/index.php/migrate
 
 ## API
 ### Financial Service
-> Get list of invoices
+#### Get list of invoices
 ```http
 GET localhost:8081/tdd-microservice-poc/index.php/api/v1/invoices
 ```
 
-> Create a new invoice (Usually called by helper after order check out)
+#### Create a new invoice
+(Usually called by helper after order check out)
 ```http
 POST localhost:8081/tdd-microservice-poc/index.php/api/v1/invoices
 ```
@@ -56,13 +57,14 @@ Request Body
     "status": "incomplete"
 }
 ```
-> Get an invoice
+`id` is optional, it is auto-increased from previous data in the table
+#### Get an invoice
 
 ```http
 GET localhost:8081/tdd-microservice-poc/index.php/api/v1/invoices/{invoice_id}
 ```
 
-> Update an invoice 
+#### Update an invoice 
 ```http
 PUT localhost:8081/tdd-microservice-poc/index.php/api/v1/invoices/{invoice_id}
 ```
@@ -74,12 +76,13 @@ Request Body
 }
 ```
 
-> Delete an invoice
+#### Delete an invoice
 ```http
 DELETE localhost:8081/tdd-microservice-poc/index.php/api/v1/invoices/{invoice_id}
 ```
 
-> Update an invoice by order id (Usually called by helper after confirming stock exist)
+#### Update an invoice by order id
+(Usually called by helper after confirming stock exist)
 ```http
 PUT localhost:8081/tdd-microservice-poc/index.php/api/v1/invoices/orders/{order_id}
 ```
@@ -91,18 +94,19 @@ Request Body
 }
 ```
 
-> Delete an invoice by order id (Usually called by helper after failing to confirm stock exist)
+#### Delete an invoice by order id
+(Usually called by helper after failing to confirm stock exist)
 ```http
 DELETE localhost:8081/tdd-microservice-poc/index.php/api/v1/invoices/{invoice_id}
 ```
 
 ### Order Service
-> Get list of orders
+#### Get list of orders
 ```http
 GET localhost:8082/tdd-microservice-poc/index.php/api/v1/orders
 ```
 
-> Create a new order
+#### Create a new order
 ```http
 POST localhost:8082/tdd-microservice-poc/index.php/api/v1/orders
 ```
@@ -117,12 +121,12 @@ Request Body
 ```
 `id` is optional, it is auto-increased from previous data in the table
 
-> Get an order
+#### Get an order
 ```http
 GET localhost:8082/tdd-microservice-poc/index.php/api/v1/orders/{order_id}
 ```
 
-> Update an order
+#### Update an order
 ```http
 PUT localhost:8082/tdd-microservice-poc/index.php/api/v1/orders/{order_id}
 ```
@@ -135,7 +139,7 @@ Request Body
 }
 ```
 
-> Delete an order
+#### Delete an order
 ```http
 DELETE localhost:8082/tdd-microservice-poc/index.php/api/v1/orders/{order_id}
 ```
@@ -145,18 +149,19 @@ Request Body
 (Not required)
 ```
 
-> Checkout an order to create it invoice and update the stock (Will create invoice and check if products is in stock)
+#### Checkout an order to create it invoice and update the stock
+(Will create invoice and check if products is in stock)
 ```http
 POST localhost:8082/tdd-microservice-poc/index.php/api/v1/orders/checkout/{order_id}
 ```
 
 ### Warehouse Service
-> Get list of products
+#### Get list of products
 ```http
 GET localhost:8083/tdd-microservice-poc/index.php/api/v1/products
 ```
 
-> Create a new product
+#### Create a new product
 ```http
 POST localhost:8083/tdd-microservice-poc/index.php/api/v1/products
 ```
@@ -171,12 +176,12 @@ Request Body
 ```
 `id` is optional, it is auto-increased from previous data in the table
 
-> Get a product
+#### Get a product
 ```http
 GET localhost:8083/tdd-microservice-poc/index.php/api/v1/products/{product_id}
 ```
 
-> Update a product
+#### Update a product
 ```http
 PUT localhost:8083/tdd-microservice-poc/index.php/api/v1/products/{product_id}
 ```
@@ -189,12 +194,12 @@ Request Body
 }
 ```
 
-> Delete a product
+#### Delete a product
 ```http
 DELETE localhost:8083/tdd-microservice-poc/index.php/api/v1/products/{product_id}
 ```
 
-> Update stock of a product
+#### Update stock of a product
 ```http
 PUT localhost:8083/tdd-microservice-poc/index.php/api/v1/products/stocks/{product_id}
 ```
