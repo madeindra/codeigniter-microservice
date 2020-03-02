@@ -1,6 +1,6 @@
 {
 	"description": "Microservice with TDD",
-	"name": "telkom/tdd-microservice-poc",
+	"name": "indrawp/tdd-microservice-poc",
 	"type": "project",
 	"license": "MIT",
 	"config": {
