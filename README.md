@@ -221,4 +221,58 @@ Request Body (Increase stock by 10)
 ## Architecture
 Here is the architecture for the microservice (if it fails to show, you can open the `TDD Microservice.xml` in draw.io)
 
-![Diagram](https://gitlab.playcourt.id/indrawp/tdd-microservice-poc/raw/develop/TDD%20Microservice.xml)
+![Diagram](https://raw.githubusercontent.com/madecanggih/tdd-microservice-poc/master/Diagram.png)
+
+- Each outlined rectangle is a separate Docker Container.
+
+- Service is written in PHP, but it can be changed as RabbitMQ is Language-Agnostic.
+
+- RabbitMQ can only receive and send a message in String format, it is possible to receive and send JSON string.
+
+- Traditionally, PHP application runs in a Web Server, it can't be used to receive the message through a socket, thus a PHP Service needs one or more Worker(s) to receive message. The worker is optionally used in sending a message as sending can be simply done using a conventional method/function.
+
+- Exchange is used when a message is needed to be sent to more than one Queue.
+
+- Exchange can route a message conditionally, but in this scenario, it only use Direct Routing, thus it will send all the message to all the Queue bonded to it.
+
+- Processes with (a) and (b) is processed separately without waiting for the other Service (asynchronously).
+
+- RabbitMQ can be used as gRPC, but the process will be synchronous, it is not fit to be used in this scenario.
+
+## How It Works
+Start - A User wants to check-out their selected order, User hit the UI and Request (orderId 1) sent by API Gateway to Order Service.
+
+1 - Order Service fetches the Order Detail of (orderId 1), Order Service get (productId 1, quantity 10) detail.
+2 - Order Service pass (orderId 1, productId 1, quantity 10) to Order Worker to create invoice and to check if the product is in stock.
+3 - Order Worker sends a message (orderId 1, productId 1, quantity 10) to Exchange 1.
+
+4a,4b - Exchange 1 received message (orderId 1, productId 1, quantity 10), as it is a Direct Exchange, it forwards the message to Subscribing Queue(s).  
+
+5a - Financial Worker received a message (orderId 1, productId 1, quantity 10), then Financial Worker passes the message to Financial Service to be processed.
+6a - Financial Service creates an Invoice based on the message (orderId 1, productId 1, quantity 10).
+7a - Financial Service successfully created the Invoice on Financial Database.
+8a - Financial Service tells Financial Worker that it has created the Invoice.
+
+5b - Warehouse Worker received a message (orderId 1, productId 1, quantity 10), then Warehouse Worker pass only (productId 1, quantity 10) to Warehouse Service to be checked.
+6b - Warehouse Service prepares a query to check stock based on the productId 1.
+7b - Warehouse Service fetches stock from Warehouse Database.
+8b - Warehouse Service gets information (stock 50) and compares it to quantity 10, because (stock > quantity), the order can be processed, send (productId 1, quantity 10, inStock true) to Warehouse Worker.
+
+9 - Warehouse Worker sends a message (productId 1, quantity 10, inStock true) to Financial Queue.
+10 - Financial Worker receives a message (productId 1, quantity 10, inStock true) stored in Financial Queue.
+11 - Financial Worker then passes the message to Financial Service to be processed.
+12 - Financial Service updates the Invoice status.
+13 - Financial Service tells Financial Worker that it has updated the Invoice.
+14 - Financial Worker sends a message (productId 1, quantity 10, invoice true) to Exchange 2.
+
+15a, 15b - Exchange 2 received a message (productId 1, quantity 10, invoice true), as it is a Direct Exchange, it forwards the message to Subscribing Queue(s).  
+
+16a - Order Worker received a message (productId 1, quantity 10, invoice true), then Order Worker passes the message to Order Service to be processed.
+17b - Order Worker completes the user's check-out process.
+
+16a - Warehouse Worker received a message (productId 1, quantity 10, invoice true), then Warehouse Worker passes the message to Warehouse Service to be processed.
+17b - Warehouse Service prepares a query to decrease the product's stock based on the message (productId 1, quantity 10, invoice true).
+18 - Warehouse Service decreases the stock of the product in the Warehouse Database.
+19 - Warehouse Service tells Warehouse Worker that it has updated the Stock.
+
+End - Order Worker returns the detail of the check-out process.
