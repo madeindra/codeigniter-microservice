@@ -7,6 +7,7 @@ There are three main decoupled service in this projects: Financial service, Orde
 ## Prerequiste
 - Docker
 - Docker Compose
+- Composer
 - Apache HTTP Server (Optional, already bundled in docker-compose)
 - PHP 7.3 (Optional, already bundled in docker-compose)
 - MySQL 8.0 (Optional, already bundled in docker-compose)
@@ -14,6 +15,25 @@ There are three main decoupled service in this projects: Financial service, Orde
 
 ## Running
 Normally, to run PHP application we just need to access it from browser by entering the address and the browser will render the page according to the instructions coded. To enable the worker subscribtion to the queue, it need to run continously, thus the worker run by using CLI. Worker initialization is done automatically if using docker-compose, if not then start the worker by running the start_worker.sh script on each service directory. 
+
+**Install dependency using script (recommended)**
+```
+chmod +x ./install-dependency.sh
+./install-dependency.sh
+```
+
+**Install dependency manually (If you are unable to run the script)**
+```
+cd financial
+composer install
+cd ..
+cd order
+composer install
+cd ..
+cd warehouse
+composer install
+cd ..
+```
 
 **Start with docker (recommended)**
 ```
