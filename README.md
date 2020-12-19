@@ -241,7 +241,9 @@ Request Body (Increase stock by 10)
 ## Architecture
 Here is the architecture for the microservice (if it fails to show, you can open the `TDD Microservice.xml` in draw.io)
 
-![Diagram](https://raw.githubusercontent.com/madecanggih/tdd-microservice-poc/master/Diagram.png)
+![Diagram](./Diagram.png)
+
+- API Gateway on the diagram is not included in this repository, but it's not necessary for this repository to work
 
 - Each outlined rectangle is a separate Docker Container.
 
