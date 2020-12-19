@@ -243,6 +243,8 @@ Here is the architecture for the microservice (if it fails to show, you can open
 
 ![Diagram](https://raw.githubusercontent.com/madecanggih/tdd-microservice-poc/master/Diagram.png)
 
+- API Gateway on the diagram is not included in this repository, but it's not necessary for this repository to work
+
 - Each outlined rectangle is a separate Docker Container.
 
 - Service is written in PHP, but it can be changed as RabbitMQ is Language-Agnostic.
