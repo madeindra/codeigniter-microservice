@@ -41,7 +41,7 @@ class Product extends REST_Controller
 
     // default POST method
     public function index_post(){
-        $stock = $this->post('price') ?? NULL;
+        $stock = $this->post('stock') ?? NULL;
         $price = $this->post('price') ?? NULL;
 
         $data = 
